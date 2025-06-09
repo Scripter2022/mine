@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLPI Analytics</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<script src="js/script.js"></script>
+<body>
+<nav id="mainNav">
+{{!-- <div class="gir_1" id="gir"></div> --}}
+  <ul>
+    <li><a href="http://192.168.20.112:8080"><i class="icon-home"></i><br />Текущая статистика</a></li>
+    <li><a href="#"><i class="icon-cog"></i><br />Фильтр по заявкам</a>
+     <ul class="sub-menu">
+      <li><a href='#' onclick="openForm()"><i class="icon-plane"></i>Произвольный фильтр</a></li>
+      </ul>
+    </li>
+    <li><a href="http://192.168.20.112:8080/doc"><i class="icon-desktop"></i><br />Doc</a>
+      <ul class="sub-menu">
+      </ul>
+    </li>
+  </ul><div class="clr"></div>
+</nav> 
+<div class="form-popup" id="myForm">
+  <form method="post" class="form-container">
+    <label for="Date with..."></label>
+            <input type="date" name="dateStart" id="dateStart"> 
+            <label for="Date of...">
+            <input type="date" name="dateStop" id="dateStop"></label><br><br>
+    <label for="Выгрузить в Excel">Дополнительные опции</label><br>
+    <fieldset>
+       <input type="checkbox" name="excelExport" id="excelExport">
+       <label for="Выгрузить в Excel">Выгрузить в Excel</label><br><br>
+    </fieldset>
+     <label for="Note"><h6>Внимание!!!<br> 1. Функция в режиме тестирования. <br> Если загрузка не началась, пожалуйста, просто повторите выборку.<br>2. При загрузке надпись "Небезопасная загрузка"  - не является сбоем или программной ошибкой. Просто нажмите кнопку "Сохранить"</h6></label><br>
+
+    <button type="submit" class=>НАЙТИ</button>
+    <button type="submit" onclick="closeForm()" class=>Закрыть</button>
+    <!--<button type="submit" class="btn cancel" onclick="closeForm()">Закрыть</button>-->
+  </form>
+</div>
+ {{!-- <div id="accordion" class="accordion" style="max-width: 25rem; margin: left; padding-top:5px">
+    <div class="accordion__item">
+      <div class="accordion__header">
+    Меню
+      </div>
+      <div class="accordion__body">
+        <div class="accordion__content">
+          <form method="post">
+            <label for="Date with..."></label>
+            <input type="date" name="dateStart" id="dateStart"> 
+            <label for="Date of...">
+            <input type="date" name="dateStop" id="dateStop"></label>
+            <input type="submit" value="НАЙТИ">
+        </form>
+        <br>
+        <button>Текущий отчет </button><br>
+        <button>Экспорт </button><br>
+        <button>Doc </button><br>
+        <button>Скриншот </button><br>
+        </div>
+      </div>
+    </div>
+  </div> --}}
+        <table id="count">
+            {{#each this.count}}
+            <tr>
+                <td>
+                    Заявок всего
+                </td>
+                <h2>
+                    <td>
+                        {{this}}
+                    </td>
+                </h2>
+                {{/each}}
+            </tr>
+        </table>
+    </div>
+    <table cellspacing="0" cellpadding="0" class="layout">
+        <tr>
+            <td id="left_col">
+                {{{body}}}
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+

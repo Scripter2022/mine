@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{title}}</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+.ct-label{
+  color: white;
+}
+    @keyframes blink {
+      0% {
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    .blinking-text {
+      margin-top: 20%;
+      position: relative;
+      font-size: 18px;
+      background-color: rgba(236, 69, 39, 0.719);
+      animation: blink 3s infinite;
+      z-index: -2;
+    }
+    .closed-text {
+      margin-top: 20%;
+      font-size: 18px;
+      background-color: rgba(23, 228, 149, 0.479);
+
+    }
+    .emty-text {
+      margin-top: 20%;
+      font-size: 18px;
+      background-color: rgba(247, 243, 23, 0.719);
+
+    }
+    #count {
+      margin-top: 25px;
+      padding-left: 15px;
+      border-width: 0px;
+      width: 800px;
+      height: 18px;
+      background: linear-gradient(to right, #8b1313, #095ab893);
+      color: #ffffff;
+      font-size: 16pt;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f11414e7, #bf943000);
+      border-radius: 5px;
+
+    }
+    #tickets {
+      margin-top: 20px;
+      padding-left: 15px;
+      border-width: 1px;
+      width: 95%;
+      height: 18px;
+      background: linear-gradient(to right, hsla(247, 4%, 55%, 0.418), #20697611);
+      color: #ffffff;
+      font-size: 9pt;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      border: white;
+    }
+      #tickets td{
+      
+      padding-left: 15px;
+      x;
+      height: 18px;
+      color: #ffffff;
+      font-size: 10pt;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      border-top: 1px solid #8a868b2f;
+    }
+    #groups {
+
+      margin-left: 20px;
+      padding-left: 5px;
+      width: 90%;
+      height: 18px;
+      background: linear-gradient(to right, hsla(26, 20%, 84%, 0.288), #331a0400);
+      color: #ffffff;
+      font-size: 9pt;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #groups table {
+      width: 100%;
+      border: none;
+      margin-bottom: 20px;
+    }
+
+    #groups table thead th {
+      padding: 3px;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 20px;
+      text-align: left;
+      color: #3110a5;
+      border-top: 2px solid #716561;
+      border-bottom: 2px solid #716561;
+    }
+
+    #groups tbody td {
+      margin-left: 30px;
+      padding-left: 25px;
+      padding: 3px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #f1f1f1;
+      border-top: 1px solid #8a868b2f;
+    }
+
+    td#status {
+      color: #ffffff00;
+      font-size: 2pt;
+      align: center;
+      border-radius: 5px;
+      
+    }
+
+    #statusWork {
+      color: rgba(216, 191, 216, 0.699);
+      padding-right: 20px;
+      font-size: 12px;
+    }
+
+    #draw{
+      background-color: #302f2f00;
+    }
+  </style>
+</head>
+<body>
+  <h2>{{title}}</h2>
+  <div style="overflow: auto; width:1200px; height:900px;">
+    <table id="tickets">
+      {{#each ticketS}}
+      <tr id="someRowTickets">
+        <td>
+          {{date}}
+        </td>
+        <td>
+          {{name}}
+        </td>
+        <td id="status">
+          {{status}}
+        </td>
+      </tr>
+      {{/each}}
+      </td>
+    </table>
+    </td>
+    <td>
+  </div>
+<div></div>
+  <canvas id="myChart"></canvas>
+</div>
+
+  <table id="groups">
+    {{#each groupCount}}
+    <tr>
+      <td id="maintenance">
+        {{maintenance}}
+      </td>
+      <td id="count1">
+        {{count}}
+      </td>
+    </tr>
+    {{/each}}
+    </td>
+  </table>
+  </td>
+  </tr>
+  </table>
+  <script>
+    var blink_speed = 500; // every 1000 == 1 second, adjust to suit
+    var t = document.getElementById('tickets');
+    //var Row = document.getElementById('someRowTickets')
+    //var Cells = Row.getElementsByTagName("td");
+    let tks = document.querySelectorAll('table')
+    let iTks = tks[2].rows;
+    for (i = 0; i < iTks.length; i++) {
+      if (t.childNodes[1].children[i].children[2].innerText == 'в работе...') {
+        t.childNodes[1].children[i].children[2].classList.add("blinking-text");
+      }
+      else if (t.childNodes[1].children[i].children[2].innerText == 'Закрыта') {
+        t.childNodes[1].children[i].children[2].classList.add("closed-text");
+      } else {
+        t.childNodes[1].children[i].children[2].classList.add("emty-text");
+      }
+
+    };
+
+    /* setInterval(() => {
+      location.reload()
+    }, 40000); */
+
+    let tks1 = document.querySelectorAll('table');
+    let itsk1=tks1[3].rows;
+    console.log(itsk1[0]);
+    let legend=["СГМ", "СПР", "АСУ", "СЛА", "СОЗиС", "СПУ", "СВТ", "СВКиХ", "ОВиВ", "ОЭС", "ОТТ", "СБ", "IT", "Подряд", "БУ"];
+    let dataGraph=[];
+    let slujba;
+    for(i=0;i<itsk1.length;i++){
+        let obColl=itsk1[i].children[1].innerText;
+        dataGraph.push(obColl)
+    };
+    
+ /* var data = {
+  // A labels array that can contain any sort of values
+  labels: legend,
+  // Our series array that contains series objects or in this case series data arrays
+  series: [
+    dataGraph
+  ]
+};
+// As options we currently only set a static size of 300x200 px. We can also omit this and use aspect ratio containers
+// as you saw in the previous example
+var options = {
+  width: 700,
+  height: 350
+};
+new Chartist.Bar('.ct-chart', data, options); --}}*/
+
+ const ctx = document.getElementById('myChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels:legend,
+       datasets: [{
+        label: '# of Votes',
+        data: dataGraph,
+
+        backgroundColor: [
+      'rgba(255, 99, 132, 0.7)',
+      'rgba(255, 159, 64, 0.7)',
+      'rgba(255, 205, 86, 0.7)',
+      'rgba(75, 192, 192, 0.7)',
+      'rgba(54, 162, 235, 0.7)',
+      'rgba(153, 102, 255, 0.7)',
+      'rgba(201, 203, 207, 0.7)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  </script>
